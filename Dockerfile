@@ -20,7 +20,7 @@ RUN ./configure --add-module=/build/nginx-rtmp-module --prefix=/nginx --without-
 
 FROM alpine:3.12
 
-RUN apk --no-cache add pcre openssl ffmpeg
+RUN apk --no-cache add pcre openssl ffmpeg rtmpdump
 COPY --from=build /nginx /nginx
 
 RUN ln -sf /dev/stdout /nginx/logs/access.log && ln -sf /dev/stderr /nginx/logs/error.log
