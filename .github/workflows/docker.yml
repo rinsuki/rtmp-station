@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - name: Pull Cache
-        run: docker pull ghcr.io/rinsuki/rtmp-station:latest
+        run: docker pull ghcr.io/rinsuki/rtmp-station:latest || true
       - run: docker build -t ghcr.io/rinsuki/rtmp-station:latest --cache-from ghcr.io/rinsuki/rtmp-station:latest .
         name: Build container
       - run: |
