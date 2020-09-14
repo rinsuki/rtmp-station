@@ -1,0 +1,21 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  docker:
+    runs-on: Ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Pull Cache
+        run: docker pull ghcr.io/rinsuki/rtmp-station:latest
+      - run: docker build -t ghcr.io/rinsuki/rtmp-station:latest --cache-from ghcr.io/rinsuki/rtmp-station:latest .
+        name: Build container
+      - run: |
+          echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u rinsuki --password-stdin
+          docker push ghcr.io/rinsuki/rtmp-station:latest
+          docker logout
+        name: Push to DockerHub
+        if: github.event_name == 'push'
