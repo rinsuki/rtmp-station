@@ -1,7 +1,5 @@
 FROM alpine:3.12 as build
 
-LABEL org.opencontainers.image.source https://github.com/rinsuki/rtmp-station
-
 WORKDIR /build
 
 ENV NGINX_VERSION 1.19.2
@@ -21,6 +19,8 @@ RUN apk --no-cache add g++ pcre-dev openssl-dev make
 RUN ./configure --add-module=/build/nginx-rtmp-module --prefix=/nginx --without-http_gzip_module && make -j4 && make install
 
 FROM alpine:3.12
+
+LABEL org.opencontainers.image.source https://github.com/rinsuki/rtmp-station
 
 RUN apk --no-cache add pcre openssl ffmpeg rtmpdump
 COPY --from=build /nginx /nginx
