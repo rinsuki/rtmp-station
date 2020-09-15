@@ -1,5 +1,7 @@
 FROM alpine:3.12 as build
 
+LABEL org.opencontainers.image.source https://github.com/rinsuki/rtmp-station
+
 WORKDIR /build
 
 ENV NGINX_VERSION 1.19.2
